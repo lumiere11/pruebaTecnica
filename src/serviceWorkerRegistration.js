@@ -31,7 +31,16 @@ export function register(config) {
 
     window.addEventListener('load', () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+      function handleNetworkChange(event) {
+        if (navigator.onLine) {
+          document.body.classList.remove("offline");
 
+        } else {
+          document.body.classList.add("offline");
+        }
+      }
+      window.addEventListener("online", handleNetworkChange);
+      window.addEventListener("offline", handleNetworkChange);
       if (isLocalhost) {
         // This is running on localhost. Let's check if a service worker still exists or not.
         checkValidServiceWorker(swUrl, config);
